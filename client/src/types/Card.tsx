@@ -1,5 +1,5 @@
 import { Attack } from "./Attack";
-import { CardType } from "./Cardtype";
+import { CardType } from "./CardType";
 import { Expansion } from "./Expansion";
 import { Rarity } from "./Rarity";
 import { Weakness } from "./Weakness";
