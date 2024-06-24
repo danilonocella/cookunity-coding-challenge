@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-export const ormconfig: DataSourceOptions = {
+export const ormConfig: DataSourceOptions = {
   type: 'postgres',
   host: process.env.PGUSER,
   port: parseInt(process.env.PGPORT),
