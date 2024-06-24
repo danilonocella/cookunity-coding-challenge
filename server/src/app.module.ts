@@ -6,20 +6,11 @@ import { CardsModule } from './cards/cards.module';
 import { AttacksModule } from './attacks/attacks.module';
 import { WeaknessesModule } from './weaknesses/weaknesses.module';
 import { BattleModule } from './battle/battle.module';
+import { ormConfig } from '../ormconfig';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.PGUSER,
-      port: parseInt(process.env.PGPORT),
-      username: process.env.PGUSER,
-      password: process.env.PGPASSWORD,
-      database: process.env.PGDATABASE,
-      entities: ['dist/**/*.entity.js'],
-      synchronize: true,
-      logging: true,
-    }),
+    TypeOrmModule.forRoot(ormConfig),
     CardsModule,
     AttacksModule,
     WeaknessesModule,
