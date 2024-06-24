@@ -22,6 +22,9 @@ This document aims to outline the decisions and assumptions made on both the fro
 ### Database
 
 - PostgreSQL was used as the database for this project.
+- Entity Relationship Diagram:
+![erd](db/db_erd.png)
+
 
 ## Setup
 
