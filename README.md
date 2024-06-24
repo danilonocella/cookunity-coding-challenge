@@ -11,6 +11,7 @@ This document aims to outline the decisions and assumptions made on both the fro
 - ViteJS was used to set up the React/Typescript app.
 - Material UI was used to build the UI components.
 - Axios was used to handle the requests to the backend.
+- Service Poke API was used to retrieve the cards images.
 
 ### Backend
 
@@ -25,7 +26,8 @@ This document aims to outline the decisions and assumptions made on both the fro
 ## Setup
 
 - Clone the repository.
-- Navigate to the server directory and run the following commands:
+- Navigate to the server directory and fill in an env file with your database credentials and the client URL (an example is provided) 
+- Run the following commands:
   ```
   cd server
   npm install
@@ -47,3 +49,4 @@ This document aims to outline the decisions and assumptions made on both the fro
 - [Vite](https://vitejs.dev/)
 - [Material UI](https://mui.com/)
 - [Axios](https://axios-http.com/)
+- [PokeAPI](https://pokeapi.co/)
