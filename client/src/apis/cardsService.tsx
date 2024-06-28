@@ -1,6 +1,6 @@
-import { Card, CardType, Expansion } from "../types";
+import { /*Card,*/ CardType, Expansion } from "../types";
 import axiosInstance from "./axiosConfig";
-
+/*
 export const createCard = async (cardData: Card) => {
   try {
     const response = await axiosInstance.post("/cards", cardData);
@@ -18,11 +18,11 @@ export const updateCard = async (id: number, cardData: Card) => {
     throw error;
   }
 };
-
+*/
 export const getAllCards = async (
   name?: string,
-  expansion?: Expansion,
-  type?: CardType
+  expansion?: Expansion | "",
+  type?: CardType | ""
 ) => {
   try {
     const params = new URLSearchParams();

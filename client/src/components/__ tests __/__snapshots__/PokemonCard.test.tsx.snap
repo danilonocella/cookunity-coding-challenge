@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PokemonCard matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1mb0zpg-MuiPaper-root-MuiCard-root"
+    color="#FCD022"
+    data-testid="pokemon-card"
+  >
+    <div
+      class="MuiBox-root css-3cwqp8"
+      data-testid="card-header"
+    >
+      <div
+        class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+      >
+        Pikachu
+      </div>
+      <div
+        class="MuiStack-root css-1rlitzi-MuiStack-root"
+      >
+        <h6
+          class="MuiTypography-root MuiTypography-h6 css-nfz5wh-MuiTypography-root"
+        >
+          40 HP
+        </h6>
+        <svg
+          aria-hidden="true"
+          aria-label="Electric"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-gp4nhn-MuiSvgIcon-root"
+          data-mui-internal-clone-element="true"
+          data-testid="type-Electric-icon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M14.69 2.21 4.33 11.49c-.64.58-.28 1.65.58 1.73L13 14l-4.85 6.76c-.22.31-.19.74.08 1.01.3.3.77.31 1.08.02l10.36-9.28c.64-.58.28-1.65-.58-1.73L11 10l4.85-6.76c.22-.31.19-.74-.08-1.01-.3-.3-.77-.31-1.08-.02"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root css-4e9ocd"
+      data-testid="card-image"
+    >
+      <img
+        alt="Pikachu"
+        class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img css-o69gx8-MuiCardMedia-root"
+        height="200"
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+      />
+    </div>
+    <div
+      class="MuiGrid-root css-vj1n65-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-g7nv63-MuiGrid-root"
+        data-testid="card-attack"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-125vsvh-MuiTypography-root"
+          >
+            Gnaw
+          </p>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-125vsvh-MuiTypography-root"
+          >
+            20
+          </p>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item css-2u5hxj-MuiGrid-root"
+        data-testid="card-footer"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-4 css-102ghzi-MuiGrid-root"
+        >
+          <div
+            class="MuiStack-root css-1d9cypr-MuiStack-root"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-caption css-1sn4lm3-MuiTypography-root"
+            >
+              Weakness:
+            </span>
+            <svg
+              aria-hidden="true"
+              aria-label="Fighting"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1xqx3iu-MuiSvgIcon-root"
+              data-mui-internal-clone-element="true"
+              data-testid="type-Fighting-icon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 20c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-3H7zM18 7c-.55 0-1 .45-1 1V5c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v5.8c0 .13.01.26.04.39l.8 4c.09.47.5.8.98.8h10.36c.45 0 .89-.36.98-.8l.8-4c.03-.13.04-.26.04-.39V8c0-.55-.45-1-1-1m-3 3H7V7h8z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-4 css-1qzfdba-MuiGrid-root"
+        >
+          <div
+            class="MuiStack-root css-1d9cypr-MuiStack-root"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-caption css-1sn4lm3-MuiTypography-root"
+            >
+              Resistance:
+            </span>
+            <svg
+              aria-hidden="true"
+              aria-label="Colorless"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-dbcmfq-MuiSvgIcon-root"
+              data-mui-internal-clone-element="true"
+              data-testid="type-Colorless-icon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-4 css-fiumd8-MuiGrid-root"
+        >
+          <div
+            class="MuiStack-root css-1d9cypr-MuiStack-root"
+          >
+            <span
+              class="MuiTypography-root MuiTypography-caption css-1sn4lm3-MuiTypography-root"
+            >
+              Rarity:
+            </span>
+            <svg
+              aria-hidden="true"
+              aria-label="Common"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1n3zrz1-MuiSvgIcon-root"
+              data-mui-internal-clone-element="true"
+              data-testid="rarity-common-icon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

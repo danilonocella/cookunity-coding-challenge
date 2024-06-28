@@ -89,8 +89,9 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ card, onClick }) => {
     <StyledCard
       color={Colors[card.type as keyof typeof Colors]}
       onClick={onClick}
+      data-testid="pokemon-card"
     >
-      <CardHeader>
+      <CardHeader data-testid="card-header">
         <Typography variant="h6" component="div">
           {card.name}
         </Typography>
@@ -99,7 +100,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ card, onClick }) => {
           {getTypeIcon(card.type)}
         </Stack>
       </CardHeader>
-      <CardImage>
+      <CardImage data-testid="card-image">
         <CardMedia
           component="img"
           height="200"
@@ -108,7 +109,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ card, onClick }) => {
         />
       </CardImage>
       <Grid>
-        <CardAttack item container xs={12} justifyContent="space-between">
+        <CardAttack item container xs={12} justifyContent="space-between" data-testid="card-attack">
           <Grid item>
             <AttackText color="textSecondary">{card.attack.name}</AttackText>
           </Grid>
@@ -116,7 +117,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ card, onClick }) => {
             <AttackText color="textSecondary">{card.attack.damage}</AttackText>
           </Grid>
         </CardAttack>
-        <Footer item container justifyContent="space-between">
+        <Footer item container justifyContent="space-between" data-testid="card-footer">
           <Grid
             item
             xs={4}

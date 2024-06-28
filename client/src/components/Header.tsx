@@ -9,7 +9,7 @@ const navItems = [
 ];
 
 const Header: FC = () => (
-  <AppBar position="static">
+  <AppBar position="static" data-testid="header">
     <Toolbar
       sx={{
         backgroundColor: (theme) => theme.palette.secondary.main,

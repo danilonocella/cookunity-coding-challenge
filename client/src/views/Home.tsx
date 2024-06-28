@@ -13,7 +13,7 @@ const Home: FC = () => {
     fetchCards();
   }, []);
 
-  const handleCardClick = (id: string) => {
+  const handleCardClick = (id: number) => {
     navigate(`/card-detail/${id}`);
   };
 
@@ -25,11 +25,11 @@ const Home: FC = () => {
             Pokemon App
           </Typography>
         </Grid>
-        <SearchFilters fetchData={fetchCards} isGridItem xs={10} />
+        <SearchFilters fetchData={fetchCards} />
       </Grid>
       {(!cards || cards.length < 1) && (
         <Grid item>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom data-testid="no-cards-available-text">
             No cards available
           </Typography>
         </Grid>

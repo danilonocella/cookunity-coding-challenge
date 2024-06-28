@@ -1,0 +1,104 @@
+// src/__tests__/main.test.tsx
+
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import ReactDOM, { Root } from 'react-dom/client';
+import { RouterProvider, RouterProviderProps } from 'react-router-dom'; // Import RouterProvider and RouterProviderProps
+import { ThemeProvider } from '@mui/material/styles';
+import { CardsProvider } from '../context/CardsContext'; // Adjust path as necessary
+import { theme, router } from '../main'; // Adjust path as necessary
+import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
+import { ClassAttributes, HTMLAttributes } from 'react';
+import { JSX } from 'react/jsx-runtime';
+
+jest.mock('react-dom/client', () => {
+  const originalModule = jest.requireActual('react-dom/client');
+  return {
+    ...originalModule,
+    createRoot: jest.fn().mockImplementation((_container): Root => ({
+      render: jest.fn(),
+      unmount: jest.fn(),
+    })),
+    hydrate: jest.fn(), // Mock hydrate if used in your main.tsx
+    render: jest.fn(),
+  };
+});
+
+jest.mock('../context/CardsContext', () => ({
+  CardsProvider: jest.fn(({ children }) => <div>{children}</div>),
+}));
+
+jest.mock('@mui/material', () => ({
+  ...jest.requireActual('@mui/material'), // Use the actual implementation of @mui/material
+  styled: jest.fn().mockImplementation((_styles) => (props: JSX.IntrinsicAttributes & ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement>) => <div {...props} />), // Mock styled to return a functional component
+}));
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  createMemoryHistory: jest.fn().mockReturnValue({}),
+  RouterProvider: jest.fn(({ children }: { children: React.ReactNode }) => ( // Adjust to accept children as React.ReactNode
+    <div>
+      {children}
+    </div>
+  )) as jest.MockedFunction<typeof RouterProvider>, // Mock as jest.MockedFunction<typeof RouterProvider> to resolve TS issue
+}));
+
+jest.mock('../main.css', () => ({}));
+
+jest.mock('@mui/icons-material', () => ({
+  CatchingPokemon: jest.fn().mockReturnValue(<img src="mock-icon.png" alt="Catching Pokemon Icon" />), // Mocking the specific icon component
+}));
+
+jest.mock('@emotion/styled', () => {
+  const styledMock = jest.requireActual('@emotion/styled'); // Use the actual implementation of @emotion/styled
+  return {
+    ...styledMock,
+    __esModule: true,
+    default: styledMock.default || (() => <div />), // Mock default export if necessary
+  };
+});
+
+describe('main.tsx', () => {
+  it('renders without crashing', () => {
+    const root = document.createElement('div');
+    root.id = 'root';
+    document.body.appendChild(root);
+
+    // Mocking the react-dom createRoot function
+    const createRootMock = jest.spyOn(ReactDOM, 'createRoot').mockImplementation(() => ({
+      render: jest.fn(),
+      unmount: jest.fn(),
+    }));
+
+    require('../main'); // Adjust path as necessary
+
+    // Expect createRoot to have been called with the root element
+    expect(createRootMock).toHaveBeenCalledWith(root);
+
+    document.body.removeChild(root);
+  });
+
+  it('should render the main components', () => {
+    render(
+      <ThemeProvider theme={theme}>
+        <CardsProvider>
+          <RouterProvider history={router.history}>
+            <main />
+          </RouterProvider>
+        </CardsProvider>
+      </ThemeProvider>
+    );
+
+    // Adjust these text expectations based on your actual components
+    expect(screen.getByRole('heading', { name: /Home/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /About/i })).toBeInTheDocument();
+  });
+
+  it('should render CatchingPokemonIcon', () => {
+    render(<CatchingPokemonIcon />);
+
+    // Verify that the CatchingPokemonIcon renders successfully
+    const icon = screen.getByRole('img', { name: /Catching Pokemon Icon/i });
+    expect(icon).toBeInTheDocument();
+  });
+});

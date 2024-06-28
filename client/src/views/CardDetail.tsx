@@ -89,7 +89,7 @@ const CardDetail: FC = () => {
       sx={{ padding: 4 }}
     >
       <Grid item xs={12}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom data-testid="card-name">
           {card?.name}
         </Typography>
       </Grid>
@@ -119,10 +119,11 @@ const CardDetail: FC = () => {
               id="simple-select"
               value={defenderCardId}
               onChange={handleSelectChange}
+              data-testid="contestant-select"
             >
               {cards.map((singleCard) => {
                 return (
-                  <MenuItem key={singleCard.id} value={singleCard.id}>
+                  <MenuItem key={singleCard.id} value={singleCard.id} data-testid={`option-${singleCard.id}`}>
                     {`${singleCard.name} - ${singleCard.hit_points} HP (${singleCard.type}) `}
                   </MenuItem>
                 );
@@ -136,13 +137,14 @@ const CardDetail: FC = () => {
             fullWidth
             onClick={() => handleBattleButtonClick()}
             disabled={!defenderCardId}
+            data-testid="battle-button"
           >
             Battle!
           </Button>
         </Grid>
         {attackSucceeded != null && (
           <Grid item xs={12}>
-            <Typography variant="h5">
+            <Typography variant="h5" data-testid="battle-result">
               Battle result: attack{" "}
               {attackSucceeded ? "succeeded!" : "did not succeed"}
             </Typography>

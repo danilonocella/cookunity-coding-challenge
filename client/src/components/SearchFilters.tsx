@@ -9,27 +9,22 @@ import {
   TextField,
 } from "@mui/material";
 import axiosInstance from "../apis/axiosConfig";
-import { debounce } from "../utils/debounce";
+import debounce from "lodash/debounce";
+import { CardType, Expansion } from "../types";
 
 interface SearchFiltersProps {
-  isGridItem?: boolean;
-  xs?: number;
   fetchData: (
-    name?: string,
-    expansion?: string,
-    type?: string
+    name: string,
+    expansion?: Expansion | "",
+    type?: CardType | ""
   ) => Promise<void>;
 }
 
-const SearchFilters: FC<SearchFiltersProps> = ({
-  fetchData,
-  isGridItem = false,
-  xs,
-}) => {
+const SearchFilters: FC<SearchFiltersProps> = ({ fetchData }) => {
   const [name, setName] = useState<string>("");
-  const [expansion, setExpansion] = useState<string>("");
+  const [expansion, setExpansion] = useState<Expansion | "">("");
   const [availableExpansions, setAvailableExpansions] = useState(null);
-  const [type, setType] = useState<string>("");
+  const [type, setType] = useState<CardType | "">("");
   const [availableTypes, setAvailableTypes] = useState(null);
 
   useEffect(() => {
@@ -56,9 +51,9 @@ const SearchFilters: FC<SearchFiltersProps> = ({
     getCardTypes();
   }, []);
 
-  // Debounced fetchData function
+  // Debounced fetchData function using lodash debounce
   const debouncedFetchData = useCallback(
-    debounce((name: string, expansion: string, type: string) => {
+    debounce((name: string, expansion: Expansion | "", type?: CardType | "") => {
       fetchData(name, expansion, type);
     }, 500),
     [fetchData]
@@ -72,12 +67,12 @@ const SearchFilters: FC<SearchFiltersProps> = ({
   const handleSelectChange = (event: SelectChangeEvent) => {
     switch (event.target.name) {
       case "expansion":
-        setExpansion(event.target.value as string);
-        fetchData(name, event.target.value, type);
+        setExpansion(event.target.value as Expansion);
+        fetchData(name, event.target.value as Expansion, type as CardType);
         break;
       case "type":
-        setType(event.target.value as string);
-        fetchData(name, expansion, event.target.value);
+        setType(event.target.value as CardType);
+        fetchData(name, expansion as Expansion, event.target.value as CardType);
         break;
     }
   };
@@ -85,12 +80,13 @@ const SearchFilters: FC<SearchFiltersProps> = ({
   return (
     <Grid
       container
-      item={isGridItem}
-      xs={xs ?? 12}
+      item
+      xs={10}
       direction="row"
       justifyContent="center"
       alignItems="center"
       spacing={1}
+      data-testid="search-filters"
     >
       <Grid item xs={4}>
         <TextField
@@ -100,6 +96,7 @@ const SearchFilters: FC<SearchFiltersProps> = ({
           value={name}
           onChange={(event) => handleInputChange(event.target.value)}
           fullWidth
+          data-testid="name-input"
         />
       </Grid>
       <Grid item xs={4}>
@@ -111,6 +108,7 @@ const SearchFilters: FC<SearchFiltersProps> = ({
             name="expansion"
             value={expansion}
             onChange={handleSelectChange}
+            data-testid="expansion-select"
           >
             {expansion.length > 0 && (
               <MenuItem value={""}>
@@ -138,6 +136,7 @@ const SearchFilters: FC<SearchFiltersProps> = ({
             value={type}
             label="$"
             onChange={handleSelectChange}
+            data-testid="type-select"
           >
             {type.length > 0 && (
               <MenuItem value={""}>

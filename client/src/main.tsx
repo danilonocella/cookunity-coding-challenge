@@ -1,6 +1,5 @@
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import "./App.css";
+import "./main.css";
 import { Box, CssBaseline } from "@mui/material";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer.tsx";
@@ -11,30 +10,30 @@ import About from "./views/About.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CardsProvider } from "./context/CardsContext.tsx";
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
-      main: '#0055A4',
+      main: "#0055A4",
     },
     secondary: {
-      main: '#CE1126',
+      main: "#CE1126",
     },
     background: {
-      default: '#f5f5f5',
+      default: "#f5f5f5",
     },
   },
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
+    fontFamily: "Roboto, Arial, sans-serif",
     h1: {
       fontWeight: 700,
-      color: '#013220',
+      color: "#013220",
     },
     h2: {
       fontWeight: 700,
-      color: '#013220',
+      color: "#013220",
     },
     body1: {
-      color: '#333',
+      color: "#333",
     },
   },
 });
@@ -62,7 +61,7 @@ const Layout = () => {
   );
 };
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
@@ -83,12 +82,17 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <div className="App">
-    <ThemeProvider theme={theme}>
-      <CardsProvider>
-        <RouterProvider router={router} />
-      </CardsProvider>
-    </ThemeProvider>
-  </div>
-);
+// Ensure createRoot is used properly
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <div className="App">
+      <ThemeProvider theme={theme}>
+        <CardsProvider>
+          <RouterProvider router={router} />
+        </CardsProvider>
+      </ThemeProvider>
+    </div>
+  );
+}

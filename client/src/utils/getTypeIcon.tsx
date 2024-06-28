@@ -50,7 +50,7 @@ export const getTypeIcon = (type: CardType) => {
 
   return (
     <Tooltip title={type}>
-      <IconComponent sx={sx} />
+      <IconComponent data-testid={`type-${type}-icon`} sx={sx} />
     </Tooltip>
   );
 };

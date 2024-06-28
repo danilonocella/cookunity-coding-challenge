@@ -9,16 +9,16 @@ import {
 import { getAllCards } from "../apis/cardsService";
 import { Card, CardType, Expansion } from "../types";
 
-interface CardsContextType {
+export interface CardsContextType {
   cards: Card[];
   fetchCards: (
     name?: string,
-    expansion?: Expansion,
-    type?: CardType
+    expansion?: Expansion | "",
+    type?: CardType | ""
   ) => Promise<void>;
 }
 
-const CardsContext = createContext<CardsContextType | undefined>(undefined);
+export const CardsContext = createContext<CardsContextType | undefined>(undefined);
 
 export const useCards = (): CardsContextType => {
   const context = useContext(CardsContext);
@@ -35,8 +35,8 @@ export const CardsProvider: FC<{ children: ReactNode }> = ({
 
   const fetchCards = async (
     name?: string,
-    expansion?: Expansion,
-    type?: CardType
+    expansion?: Expansion | "",
+    type?: CardType | ""
   ) => {
     try {
       const cardsData = await getAllCards(name, expansion, type);

@@ -9,13 +9,14 @@ type RarityIcons = {
 };
 
 const rarityIcons: RarityIcons = {
-  Common: <CircleIcon sx={{ color: "#000", fontSize: 12 }} />,
+  Common: <CircleIcon sx={{ color: "#000", fontSize: 12 }} data-testid="rarity-common-icon"/>,
   Uncommon: (
     <SquareIcon
       sx={{ color: "#000", fontSize: 12, transform: "rotate(45deg)" }}
+      data-testid="rarity-uncommon-icon"
     />
   ),
-  Rare: <StarIcon sx={{ color: "#000", fontSize: 12 }} />,
+  Rare: <StarIcon sx={{ color: "#000", fontSize: 12 }} data-testid="rarity-rare-icon"/>,
 };
 
 export const getRarityIcon = (rarity: Rarity): JSX.Element | null => {

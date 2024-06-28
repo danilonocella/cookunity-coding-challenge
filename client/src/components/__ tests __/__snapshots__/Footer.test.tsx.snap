@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer component matches snapshot 1`] = `
+<div>
+  <footer
+    class="MuiBox-root css-1v6jfi3"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1wxd26l-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body2 css-1cl5n3e-MuiTypography-root"
+        >
+          Engineer Coding Challenge - Copyright © 2024 CookUnity
+        </p>
+      </div>
+    </div>
+  </footer>
+</div>
+`;
