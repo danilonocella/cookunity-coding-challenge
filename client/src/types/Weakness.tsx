@@ -1,4 +1,4 @@
-import { CardType } from "./CardType"
+import { CardType } from "./enums/CardType"
 
 export type Weakness = {
   "_id": number,

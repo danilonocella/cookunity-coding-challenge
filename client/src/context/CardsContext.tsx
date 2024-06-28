@@ -9,13 +9,13 @@ import {
 import { getAllCards } from "../apis/cardsService";
 import { Card, CardType, Expansion } from "../types";
 
+export interface FetchCards {
+  (name?: string, expansion?: Expansion, type?: CardType): Promise<void>;
+}
+
 interface CardsContextType {
   cards: Card[];
-  fetchCards: (
-    name?: string,
-    expansion?: Expansion,
-    type?: CardType
-  ) => Promise<void>;
+  fetchCards: FetchCards;
 }
 
 const CardsContext = createContext<CardsContextType | undefined>(undefined);
@@ -33,11 +33,7 @@ export const CardsProvider: FC<{ children: ReactNode }> = ({
 }) => {
   const [cards, setCards] = useState<Card[]>([]);
 
-  const fetchCards = async (
-    name?: string,
-    expansion?: Expansion,
-    type?: CardType
-  ) => {
+  const fetchCards: FetchCards = async (name?, expansion?, type?) => {
     try {
       const cardsData = await getAllCards(name, expansion, type);
       setCards(cardsData);

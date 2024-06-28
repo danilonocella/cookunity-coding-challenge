@@ -10,15 +10,13 @@ import {
 } from "@mui/material";
 import axiosInstance from "../apis/axiosConfig";
 import { debounce } from "../utils/debounce";
+import { FetchCards } from "../context/CardsContext";
+import { CardType, Expansion } from "../types";
 
 interface SearchFiltersProps {
   isGridItem?: boolean;
   xs?: number;
-  fetchData: (
-    name?: string,
-    expansion?: string,
-    type?: string
-  ) => Promise<void>;
+  fetchData: FetchCards;
 }
 
 const SearchFilters: FC<SearchFiltersProps> = ({
@@ -27,9 +25,9 @@ const SearchFilters: FC<SearchFiltersProps> = ({
   xs,
 }) => {
   const [name, setName] = useState<string>("");
-  const [expansion, setExpansion] = useState<string>("");
+  const [expansion, setExpansion] = useState<Expansion | "">("");
   const [availableExpansions, setAvailableExpansions] = useState(null);
-  const [type, setType] = useState<string>("");
+  const [type, setType] = useState<CardType | "">("");
   const [availableTypes, setAvailableTypes] = useState(null);
 
   useEffect(() => {
@@ -58,8 +56,12 @@ const SearchFilters: FC<SearchFiltersProps> = ({
 
   // Debounced fetchData function
   const debouncedFetchData = useCallback(
-    debounce((name: string, expansion: string, type: string) => {
-      fetchData(name, expansion, type);
+    debounce((name: string, expansion: Expansion | "", type: CardType | "") => {
+      fetchData(
+        name,
+        emptyStringToUndefined(expansion),
+        emptyStringToUndefined(type)
+      );
     }, 500),
     [fetchData]
   );
@@ -69,15 +71,34 @@ const SearchFilters: FC<SearchFiltersProps> = ({
     debouncedFetchData(name, expansion, type);
   };
 
-  const handleSelectChange = (event: SelectChangeEvent) => {
+  //Required since the empty state for the Select is an empty string
+  function emptyStringToUndefined<T>(value: "" | T): T | undefined {
+    return value === "" ? undefined : value;
+  }
+
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const selectedValue = event.target.value;
+
     switch (event.target.name) {
       case "expansion":
-        setExpansion(event.target.value as string);
-        fetchData(name, event.target.value, type);
+        const selectedExpansion =
+          selectedValue === "" ? "" : (selectedValue as Expansion);
+        setExpansion(selectedExpansion as "" | Expansion);
+        fetchData(
+          name,
+          emptyStringToUndefined(selectedExpansion),
+          emptyStringToUndefined(type)
+        );
         break;
       case "type":
-        setType(event.target.value as string);
-        fetchData(name, expansion, event.target.value);
+        const selectedType =
+          selectedValue === "" ? "" : (selectedValue as CardType);
+        setType(selectedType as "" | CardType);
+        fetchData(
+          name,
+          emptyStringToUndefined(expansion),
+          emptyStringToUndefined(selectedType)
+        );
         break;
     }
   };

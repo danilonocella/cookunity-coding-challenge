@@ -13,7 +13,7 @@ const Home: FC = () => {
     fetchCards();
   }, []);
 
-  const handleCardClick = (id: string) => {
+  const handleCardClick = (id: number) => {
     navigate(`/card-detail/${id}`);
   };
 
