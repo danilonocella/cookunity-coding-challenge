@@ -11,6 +11,7 @@ This document aims to outline the decisions and assumptions made on both the fro
 - ViteJS was used to set up the React/Typescript app.
 - Material UI was used to build the UI components.
 - Axios was used to handle the requests to the backend.
+- React-query was used to manage the state of the requests to the backend.
 - Service Poke API was used to retrieve the cards images.
 
 ### Backend
@@ -52,4 +53,5 @@ This document aims to outline the decisions and assumptions made on both the fro
 - [Vite](https://vitejs.dev/)
 - [Material UI](https://mui.com/)
 - [Axios](https://axios-http.com/)
+- [React-query](https://tanstack.com/query/v3)
 - [PokeAPI](https://pokeapi.co/)
