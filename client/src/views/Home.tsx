@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Grid, Typography } from "@mui/material";
 import PokemonCard from "../components/PokemonCard";
 import SearchFilters from "../components/SearchFilters";
@@ -6,12 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useCards } from "../context/CardsContext";
 
 const Home: FC = () => {
-  const { cards, fetchCards } = useCards();
+  const { cards, cardsLoading, cardsError } = useCards();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchCards();
-  }, []);
 
   const handleCardClick = (id: number) => {
     navigate(`/card-detail/${id}`);
@@ -25,9 +21,16 @@ const Home: FC = () => {
             Pokemon App
           </Typography>
         </Grid>
-        <SearchFilters fetchData={fetchCards} isGridItem xs={10} />
+        <SearchFilters isGridItem xs={10} />
       </Grid>
-      {(!cards || cards.length < 1) && (
+      {cardsLoading && (
+        <Grid item>
+          <Typography variant="h5" gutterBottom>
+            Loading cards...
+          </Typography>
+        </Grid>
+      )}
+      {(!cards || cards.length < 1 || cardsError) && (
         <Grid item>
           <Typography variant="h5" gutterBottom>
             No cards available

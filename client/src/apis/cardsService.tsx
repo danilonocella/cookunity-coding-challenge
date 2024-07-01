@@ -19,37 +19,34 @@ export const updateCard = async (id: number, cardData: Card) => {
   }
 };
 
-export const getAllCards = async (
+export const getAllCards = (
   name?: string,
   expansion?: Expansion,
   type?: CardType
 ) => {
-  try {
-    const params = new URLSearchParams();
-    
-    if (name) {
-      params.append("name", name);
-    }
-    if (expansion) {
-      params.append("expansion", expansion);
-    }
-    if (type) {
-      params.append("type", type);
-    }
+  const params = new URLSearchParams();
 
-    const url = `/cards${params.toString() ? `?${params.toString()}` : ""}`;
-    const response = await axiosInstance.get(url);
-    return response.data;
-  } catch (error) {
-    throw error;
+  if (name) {
+    params.append("name", name);
   }
+  if (expansion) {
+    params.append("expansion", expansion);
+  }
+  if (type) {
+    params.append("type", type);
+  }
+
+  const url = `/cards${params.toString() ? `?${params.toString()}` : ""}`;
+  return axiosInstance.get<Card[]>(url).then((res) => res.data);
 };
 
-export const getCardById = async (id: number) => {
-  try {
-    const response = await axiosInstance.get(`/cards/${id}`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+export const getCardById = (id: number) => {
+  return axiosInstance.get<Card>(`/cards/${id}`).then((res) => res.data);
+};
+
+export const getExpansions = () => {
+  return axiosInstance.get(`/cards/expansions`).then((res) => res.data);
+};
+export const getCardTypes = () => {
+  return axiosInstance.get(`/cards/types`).then((res) => res.data);
 };

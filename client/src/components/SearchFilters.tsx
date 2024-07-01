@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   FormControl,
   Grid,
@@ -8,73 +8,44 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import axiosInstance from "../apis/axiosConfig";
-import { debounce } from "../utils/debounce";
-import { FetchCards } from "../context/CardsContext";
+import { useCards } from "../context/CardsContext";
 import { CardType, Expansion } from "../types";
+import { getCardTypes, getExpansions } from "../apis/cardsService";
+import { useQuery } from "@tanstack/react-query";
 
 interface SearchFiltersProps {
   isGridItem?: boolean;
   xs?: number;
-  fetchData: FetchCards;
 }
 
-const SearchFilters: FC<SearchFiltersProps> = ({
-  fetchData,
-  isGridItem = false,
-  xs,
-}) => {
-  const [name, setName] = useState<string>("");
-  const [expansion, setExpansion] = useState<Expansion | "">("");
+const SearchFilters: FC<SearchFiltersProps> = ({ isGridItem = false, xs }) => {
+  const { filters } = useCards();
+  const { name, expansion, type } = filters;
+  const { setName, setExpansion, setType } = filters;
   const [availableExpansions, setAvailableExpansions] = useState(null);
-  const [type, setType] = useState<CardType | "">("");
   const [availableTypes, setAvailableTypes] = useState(null);
 
-  useEffect(() => {
-    const getCardExpansions = async () => {
-      try {
-        const response = await axiosInstance.get("/cards/expansions");
-        setAvailableExpansions(response.data);
-      } catch (error) {
-        throw error;
-      }
-    };
-    getCardExpansions();
-  }, []);
+  const { data: expansions } = useQuery({
+    queryKey: ["expansions"],
+    queryFn: () => getExpansions(),
+  });
 
   useEffect(() => {
-    const getCardTypes = async () => {
-      try {
-        const response = await axiosInstance.get("/cards/types");
-        setAvailableTypes(response.data);
-      } catch (error) {
-        throw error;
-      }
-    };
-    getCardTypes();
-  }, []);
+    setAvailableExpansions(expansions);
+  }, [expansions]);
 
-  // Debounced fetchData function
-  const debouncedFetchData = useCallback(
-    debounce((name: string, expansion: Expansion | "", type: CardType | "") => {
-      fetchData(
-        name,
-        emptyStringToUndefined(expansion),
-        emptyStringToUndefined(type)
-      );
-    }, 500),
-    [fetchData]
-  );
+  const { data: cardTypes } = useQuery({
+    queryKey: ["cardTypes"],
+    queryFn: () => getCardTypes(),
+  });
+
+  useEffect(() => {
+    setAvailableTypes(cardTypes);
+  }, [cardTypes]);
 
   const handleInputChange = (name: string) => {
     setName(name);
-    debouncedFetchData(name, expansion, type);
   };
-
-  //Required since the empty state for the Select is an empty string
-  function emptyStringToUndefined<T>(value: "" | T): T | undefined {
-    return value === "" ? undefined : value;
-  }
 
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
     const selectedValue = event.target.value;
@@ -84,21 +55,11 @@ const SearchFilters: FC<SearchFiltersProps> = ({
         const selectedExpansion =
           selectedValue === "" ? "" : (selectedValue as Expansion);
         setExpansion(selectedExpansion as "" | Expansion);
-        fetchData(
-          name,
-          emptyStringToUndefined(selectedExpansion),
-          emptyStringToUndefined(type)
-        );
         break;
       case "type":
         const selectedType =
           selectedValue === "" ? "" : (selectedValue as CardType);
         setType(selectedType as "" | CardType);
-        fetchData(
-          name,
-          emptyStringToUndefined(expansion),
-          emptyStringToUndefined(selectedType)
-        );
         break;
     }
   };

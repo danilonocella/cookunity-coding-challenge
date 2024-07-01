@@ -16,6 +16,7 @@ import { getCardById } from "../apis/cardsService";
 import { useCards } from "../context/CardsContext";
 import { battleSimulation } from "../apis/battleService";
 import { Card } from "../types";
+import { useQuery } from "@tanstack/react-query";
 
 const CircleContainer = styled("div")({
   width: 50,
@@ -29,55 +30,54 @@ const CircleContainer = styled("div")({
 
 const CardDetail: FC = () => {
   const { id } = useParams();
-  const { cards, fetchCards } = useCards();
+  const { cards, clearFilters } = useCards();
   const [card, setCard] = useState<Card | null>(null);
   const [defenderCardId, setDefenderCardId] = useState<string>("");
-  const [attackSucceeded, setAttackSucceded] = useState<boolean | null>(null);
+  const [attackSucceeded, setAttackSucceeded] = useState<boolean | null>(null);
 
   //Refetch cards without any filters
   useEffect(() => {
-    fetchCards();
+    clearFilters();
   }, []);
 
-  const fetchCardDetails = async (id?: string) => {
-    try {
-      const cardsData = await getCardById(parseInt(id as string));
-
-      setCard(cardsData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    isPending: cardDataLoading,
+    error: cardDataError,
+    data: cardData,
+  } = useQuery({
+    queryKey: ["cardById", id],
+    queryFn: () => getCardById(parseInt(id as string)),
+  });
 
   useEffect(() => {
-    if (id) {
-      fetchCardDetails(id);
-    }
-  }, [id]);
+    cardData && setCard(cardData);
+  }, [cardData]);
 
   const handleSelectChange = (event: SelectChangeEvent) => {
+    setAttackSucceeded(null)
     setDefenderCardId(event.target.value);
   };
 
   const handleBattleButtonClick = () => {
-    simulateBattle();
+    refetch();
   };
 
-  const simulateBattle = async () => {
-    const attackerId = parseInt(id as string);
-    const defenderId = parseInt(defenderCardId);
-    try {
-      const battleSimulationResult = await battleSimulation({
-        attackerId,
-        defenderId,
-      });
-      setAttackSucceded(battleSimulationResult.attackSucceeded);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { data: battleSimulationResult, refetch } = useQuery({
+    queryKey: ["battleSimulation", id, defenderCardId],
+    queryFn: () =>
+      battleSimulation({
+        attackerId: parseInt(id as string),
+        defenderId: parseInt(defenderCardId),
+      }),
+    enabled: false,
+  });
 
-  if (!card) return null;
+  useEffect(() => {
+    battleSimulationResult &&
+      setAttackSucceeded(battleSimulationResult.attackSucceeded);
+  }, [battleSimulationResult]);
+
+  if (!card || cardDataError) return null;
 
   return (
     <Grid
@@ -94,7 +94,13 @@ const CardDetail: FC = () => {
         </Typography>
       </Grid>
       <Grid item>
-        <PokemonCard card={card} />
+        {cardDataLoading ? (
+          <Typography variant="h4" gutterBottom>
+            Loading card details...
+          </Typography>
+        ) : (
+          <PokemonCard card={card} />
+        )}
       </Grid>
       <Grid item>
         <CircleContainer>VS</CircleContainer>
@@ -120,13 +126,14 @@ const CardDetail: FC = () => {
               value={defenderCardId}
               onChange={handleSelectChange}
             >
-              {cards.map((singleCard) => {
-                return (
-                  <MenuItem key={singleCard.id} value={singleCard.id}>
-                    {`${singleCard.name} - ${singleCard.hit_points} HP (${singleCard.type}) `}
-                  </MenuItem>
-                );
-              })}
+              {cards &&
+                cards.map((singleCard) => {
+                  return (
+                    <MenuItem key={singleCard.id} value={singleCard.id}>
+                      {`${singleCard.name} - ${singleCard.hit_points} HP (${singleCard.type}) `}
+                    </MenuItem>
+                  );
+                })}
             </Select>
           </FormControl>
         </Grid>

@@ -1,16 +1,10 @@
 import axiosInstance from "./axiosConfig";
 
-export const battleSimulation = async (battleSimulationProps: {
+export const battleSimulation = (battleSimulationProps: {
   attackerId: number;
   defenderId: number;
 }) => {
-  try {
-    const response = await axiosInstance.post(
-      "/battle/simulate",
-      battleSimulationProps
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return axiosInstance
+    .post("/battle/simulate", battleSimulationProps)
+    .then((res) => res.data);
 };
