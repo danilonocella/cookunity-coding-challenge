@@ -45,11 +45,11 @@ export const useCards = (): CardsContextType => {
 export const CardsProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [cards, setCards] = useState<Card[] | undefined>([]);
   const [name, setName] = useState<string>("");
-  const debouncedName = useDebounce(name, 300);
+  const debouncedName: string = useDebounce(name, 300);
   const [expansion, setExpansion] = useState<Expansion | "">("");
   const [type, setType] = useState<CardType | "">("");
 
-  const filters = {
+  const filters: Filters = {
     name,
     setName,
     expansion,
@@ -58,7 +58,7 @@ export const CardsProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setType,
   };
 
-  const clearFilters = () => {
+  const clearFilters: () => void = () => {
     setName("");
     setExpansion("");
     setType("");
