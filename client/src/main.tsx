@@ -9,9 +9,9 @@ import CardDetail from "./views/CardDetail.tsx";
 import Home from "./views/Home.tsx";
 import About from "./views/About.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { CardsProvider } from "./context/CardsContext.tsx";
+import { CardsProvider } from "./contexts/CardsContext.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ErrorBoundary from "./context/ErrorBoundary.tsx";
+import ErrorBoundary from "./contexts/ErrorBoundary.tsx";
 
 const theme = createTheme({
   palette: {

@@ -3,7 +3,7 @@ import { Grid, Typography } from "@mui/material";
 import PokemonCard from "../components/PokemonCard";
 import SearchFilters from "../components/SearchFilters";
 import { useNavigate } from "react-router-dom";
-import { useCards } from "../context/CardsContext";
+import { useCards } from "../contexts/CardsContext";
 
 const Home: FC = () => {
   const { cards, cardsLoading, cardsError } = useCards();

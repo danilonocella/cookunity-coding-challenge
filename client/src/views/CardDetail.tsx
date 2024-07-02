@@ -13,7 +13,7 @@ import { FC, useEffect, useState } from "react";
 import PokemonCard from "../components/PokemonCard";
 import { useParams } from "react-router-dom";
 import { getCardById } from "../apis/cardsService";
-import { useCards } from "../context/CardsContext";
+import { useCards } from "../contexts/CardsContext";
 import { battleSimulation } from "../apis/battleService";
 import { Card } from "../types";
 import { useQuery } from "@tanstack/react-query";

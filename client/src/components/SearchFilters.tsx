@@ -8,7 +8,7 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useCards } from "../context/CardsContext";
+import { useCards } from "../contexts/CardsContext";
 import { CardType, Expansion } from "../types";
 import { getCardTypes, getExpansions } from "../apis/cardsService";
 import { useQuery } from "@tanstack/react-query";
