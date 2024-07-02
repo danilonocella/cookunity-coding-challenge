@@ -11,6 +11,7 @@ import About from "./views/About.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CardsProvider } from "./context/CardsContext.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ErrorBoundary from "./context/ErrorBoundary.tsx";
 
 const theme = createTheme({
   palette: {
@@ -70,11 +71,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <ErrorBoundary>
+            <Home />
+          </ErrorBoundary>
+        ),
       },
       {
         path: "/card-detail/:id",
-        element: <CardDetail />,
+        element: (
+          <ErrorBoundary>
+            <CardDetail />
+          </ErrorBoundary>
+        ),
       },
       {
         path: "/about",
