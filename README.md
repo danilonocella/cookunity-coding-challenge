@@ -1,7 +1,5 @@
 # CookUnity - Engineer Coding Challenge
 
-This document aims to outline the decisions and assumptions made on both the frontend ('client') & backend ('server') repositories during the development of the "Pokemon App", the Engineer Coding Challenge requested as part of CookUnity's selection process. Additionally, it provides a guideline to run the app.
-
 ![Example](pokemon-app-demo.gif)
 
 ## Task Details
